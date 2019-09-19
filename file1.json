@@ -1,0 +1,29 @@
+{
+    "module": [
+      {
+        "ec2_grabpay-osquery": [
+          {
+            "count_instances": "2",
+            "iam_instance_profile": "${module.grabpay_iam_basic.ec2_base_instance_profile}",
+            "instance_subnets": "${data.terraform_remote_state.network.private_subnet_ids_v2}",
+            "instance_type": "{{ec2_instance}}",
+            "key_pair": "{{key_name}}",
+            "sg_ids": [
+              "${aws_security_group.ec2_{{srv}}.id}",
+              "${data.terraform_remote_state.sg.base_internal_sg_id}"
+            ],
+            "source": "../../../../modules/aws/compute/ec2",
+            "tags": [
+              {
+                "Name": "{{ec2_name}}i_count.sg.aws.grabpay.com",
+                "tag_component_name": "{{srv}}",
+                "tag_cost_center": "{{srv}}",
+                "tag_env": "{{tag_env}}",
+                "tag_jira": "{{jira_id}}"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
